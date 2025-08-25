@@ -1,0 +1,49 @@
+services:
+  #APPLICATION CONTAINERS NEEDED TO RUN THE APPLICATION
+  mysql:
+    image: mysql:5.7
+    env_file:
+      - ./envs/mysql.env
+  php:
+    build:
+      context: .
+      dockerfile: dockerfiles/php.dockerfile
+    volumes:
+      - ./src:/var/www/html
+  server:
+    build:
+      context: .
+      dockerfile: dockerfiles/nginx.dockerfile
+    ports:
+      - 8081:80
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - mysql
+
+  #UTILITY CONTAINERS NEEDED TO CREATE AND/OR FILL THE APPLICATION FOLDERS
+
+  composer:
+    build:
+      context: ./dockerfiles
+      dockerfile: composer.dockerfile
+    volumes:
+      - ./src:/var/www/html # we expose our souce code directory to this image througn binding
+  artisan:
+    build:
+      context: .
+      dockerfile: dockerfiles/php.dockerfile
+    volumes:
+      - ./src:/var/www/html
+    entrypoint: ["php", "/var/www/html/artisan"]
+  npm:
+    image: node:20
+    working_dir: /var/www/html
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "5173:5173" # <-- expose Vite's dev server port
+    entrypoint: ["npm"] # <-- This line ensures it runs `npm` instead of Linux `install`
+    command: ["run", "dev"]
