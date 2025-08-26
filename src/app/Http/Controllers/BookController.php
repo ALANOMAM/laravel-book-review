@@ -14,7 +14,8 @@ class BookController extends Controller
     {
         $title = $request->input('title');
 
-
+        //When the title is specified(whwn we search for a word) the books
+        //rendered here are limited by title, otherwise we have all the books
         $books = Book::when($title, function ($query, $title){
          //i use the "scopeTitle" local query scope created in the book model   
          return $query->title($title);
