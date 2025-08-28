@@ -16,13 +16,16 @@ class ReviewFactory extends Factory
      */
     public function definition(): array
     {
-        $createdAt = fake()->dateTimeBetween('-2 years', 'now');
         return [
             'book_id' => null,
             'review' => fake()->sentence,
             'rating' => fake()->numberBetween(1,5),
-            'created_at'=> $createdAt,
-            'updated_at'=> fake()->dateTimeBetween($createdAt, 'now'),
+            'created_at'=> fake()->dateTimeBetween('-2 years'),
+            'updated_at' => function (array $attributes){
+            return fake()->dateTimeBetween($attributes['created_at']);
+        },
         ];
     }
+
 }
+

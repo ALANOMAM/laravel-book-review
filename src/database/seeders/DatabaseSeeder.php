@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        //this will create 33 books, and for every single book 
+        //this will create 100 books, and for every single book 
         //it will decide randomly how many reviews to generate,
         // and then generate those reviews
         Book::factory(33)->create()->each( function($book){
