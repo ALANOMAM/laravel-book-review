@@ -12,7 +12,7 @@
 
 # ⚙️ Setup Instructions
 
-## 1-When inside the project folder run
+## 1-When inside the project add the "vendor" folder by running run
 
 ### `docker-compose run --rm composer install`
 
@@ -43,7 +43,7 @@
 
 ### `docker-compose exec php php artisan migrate:refresh --seed`
 
-## 7-Set up the boostrap part
+## 7-Set up the boostrap part and install node_modules folder
 
 ### `docker-compose run --rm npm install`
 
