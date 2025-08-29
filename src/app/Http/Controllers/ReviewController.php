@@ -33,14 +33,16 @@ class ReviewController extends Controller
          //if everything is validated correctly, i will get a data array with my info inside
         $data = $request->validate([
             'review' => 'required|min:15',
-            'rating' => 'required|min:1|max:5|integer|',
+            'rating' => 'required|min:1|max:5|integer',
+        ], [
+            'review.required' => 'Please write a review.',
+            'review.min' => 'The review must be at least 15 characters.',
+            'rating.required' => 'Please provide a rating.',
+            'rating.min' => 'Rating must be at least 1.',
+            'rating.max' => 'Rating cannot be more than 5.',
+            'rating.integer' => 'Rating must be a whole number.',
         ]);
-    //    //we create a new task
-    //     $review = new Review();
-    //     $review->review = $data['review'];
-    //     $review->rating = $data['rating'];
-    //     //save changes to the database
-    //     $review->save();
+
 
         $book->reviews()->create($data);
         return redirect()->route('books.show', compact('book'));

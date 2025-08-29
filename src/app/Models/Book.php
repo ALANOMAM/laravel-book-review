@@ -32,6 +32,8 @@ class Book extends Model
             ]);
        }
 
+
+
          public function scopeWithAverageRating (Builder $query, $from = null, $to = null): Builder|QueryBuilder {
             //i applied a time range to my local query scope.
             return $query->withAvg([

@@ -18,17 +18,28 @@
      {{-- <textarea name="review" id="review" cols="30" rows="5"></textarea> --}}
      <div>
         <textarea class="form-control mt-2" placeholder="{{__('messages.leave_a_review_here')}}" name="review" id="review" style="height: 100px"></textarea>
+        @error('review')
+            <div class="alert alert-danger mt-2">
+              <p>{{ $message }}</p>
+            </div>
+        @enderror
      </div>
      </div>
 
      <div class="d-flex flex-column mt-3">
         <label for="rating">{{__('messages.rating')}}</label>
         <select class="form-select w-25 mt-2" aria-label="Default select example" name="rating" id="rating">
-        <option selected>{{__('messages.select_a_rating')}}</option>
+        <option value="">{{__('messages.select_a_rating')}}</option>
             @for($i=1; $i<=5; $i++)
              <option value="{{$i}}">{{$i}}</option>
             @endfor
         </select>
+        @error('rating')
+            <div class="alert alert-danger mt-2">
+              <p>{{ $message }}</p>
+            </div>
+        @enderror
+        
      </div>
 
      <div class="mt-3">
