@@ -4,6 +4,8 @@ services:
     image: mysql:5.7
     env_file:
       - ./envs/mysql.env
+    volumes:
+      - mysql_data:/var/lib/mysql
   php:
     build:
       context: .
@@ -47,3 +49,6 @@ services:
       - "5173:5173" # <-- expose Vite's dev server port
     entrypoint: ["npm"] # <-- This line ensures it runs `npm` instead of Linux `install`
     command: ["run", "dev"]
+
+volumes:
+  mysql_data:
